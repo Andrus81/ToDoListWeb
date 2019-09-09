@@ -1,0 +1,87 @@
+/*  CSS styles for the ToDoList website */
+
+
+/* #Footer is style from section#id=footer,
+where to set the Footer to the bottom of the page */
+#Footer{
+    position : fixed !important;
+    bottom : 0 !important;
+    width: 100%;
+}
+
+/* #Content-Section is style use in 'index.html'
+where we set a component in the center of the page */
+#Content-Section{
+    position:absolute; 
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    margin:auto;
+}
+
+/* #Content-Section2 is style use in 'board.html'
+where it allows us to leave a margin of 10px with respect to the header
+*/
+#Content-Section2{
+    margin-top:10px;
+}
+
+/* taskButton is style use in 'board.html' in a user's tasks
+where it allows us to leave a margin of 10px with respect to the header
+*/
+.taskButton{
+    margin-bottom: 10px;
+    width: 90%;
+}
+
+#iconDelete{
+    position: relative;
+    margin: auto !important;
+    padding-top: 10px;
+    width: 1px;
+}
+
+.aTask {
+  width: 95%;
+}
+
+/* Start:  Dropdown styles for states
+Styles to show a user's status when hovering over a task
+*/
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    width: 95%;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-content-down {
+    display: none;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .dropdown-content-down a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content-down a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content-down {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
+  /* End:  Dropdown styles for states*/

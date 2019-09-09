@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDoListWeb - Board</title>    
+    <link rel="icon" href="img/logo.jpg" type="image/x-icon">	
+    <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">  
+    <link rel="stylesheet" href="css/autocomplete.css">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    
+</head>
+<body>
+    <div id="appIndex">
+            
+        <!-- Start Section Header-->
+        <section id="Header">
+            <nav class="blue">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">To Do List</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">                    
+                        <li>Go to personal board<a href="person.html" class="waves-effect waves-light"><i class="material-icons">exit_to_app</i></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </section>
+        <!-- End Section Header-->
+
+
+        <!-- Start Section body Board -->
+        <section id="Content-Section2" >
+            <div class="row">
+                <div class="col s3 m3 l3">
+                    <div clas="row">
+                      
+                        <!-- Start Div Add new task -->
+                        <div class="card white darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title black-text"><strong>Add New Task</strong></span>                                
+                                <input type="text" class="validate black-text" placeholder="Name Task" v-model="newTask">                                   
+                                <textarea name="textarea" class="materialize-textarea black-text" rows="10" cols="50" placeholder="Description Task" v-model="descNewTask"></textarea>
+                            </div>
+                            <div class="card-action">
+                                <button class="waves-effect waves-light btn blue" v-on:click="AddTask()">Add Task</button>  
+                            </div>
+                        </div> 
+                        <!-- End Div Add new task -->
+
+                        <!-- Start Div List of tasks -->
+                        <div class="card white darken-1">
+                                <div class="card-content black-text" style="overflow: auto; height: 400px;">
+                                    <ul>
+                                        <li v-for="task in listTask">                                          
+                                            <div class="dropdown taskButton">                                                  
+                                                <a class="waves-effect waves-light btn modal-trigger blue aTask" v-on:click="modifyTask(task)" href="#modalAssignTaskUser">{{task.name}}
+                                                        <i class="material-icons right">info</i>
+                                                </a>
+                                                <div class="dropdown-content-down">                                                    
+                                                        <a v-for="state in listState" v-on:click="AssignState(task,state._id)">{{state.name}}</a>  
+                                                </div>                                                 
+                                            </div>    
+                                            <a href="#"><i class="material-icons" id="iconDelete" v-on:click="RemoveTask(task._id)">delete_forever</i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div> 
+                        <!-- Start Div List of tasks -->                         
+                    </div>
+                </div>
+
+                <!-- Start  List States in Columns -->
+                <div class="col s9 m9 l9">                    
+                    <div class="row">
+                        <!-- We show the states created by the user-->
+                        <div class="col s12 m3 l3"  v-for="state in listState">
+                            <div class="dropdown">
+                                <h5>{{state.name}}</h5>
+                                    <a href="#" v-if="state.userid!=undefined">
+                                        <i class="material-icons dropdown-content-down" 
+                                        id="iconDelete" 
+                                        v-on:click="RemoveState(state._id)">
+                                        delete_forever
+                                        </i>
+                                    </a>                                     
+                            </div>  
+
+                             <!-- We show the tasks in their respective state -->       
+                            <div class="card-panel white">
+                                <div v-for="task in  listShowTask" v-if="task.stateid == state._id">
+                                    <div class="dropdown taskButton">
+                                            <a class="waves-effect waves-light btn modal-trigger blue aTask" v-on:click="modifyTask(task)" href="#modalAssignTaskUser">{{task.name}}
+                                                    <i class="material-icons right">info</i>
+                                            </a>
+                                            
+                                            <div class="dropdown-content-down">
+                                                    <a v-for="stat in listState" v-on:click="ChangeState(task,stat._id)">{{stat.name}}</a>  
+                                                    <a v-on:click="ChangeState(task)"  class="text-red">Unlink</a>                                                
+                                            </div>                                             
+                                        </div>
+                                        <a href="#"><i class="material-icons" id="iconDelete" v-on:click="RemoveTask(task._id)">delete_forever</i></a>
+                                    </div> 
+                                </div>                                 
+                            </div>
+                        </div>                            
+                    </div>
+            </div>
+        </section>
+        <!-- Start Section body Board -->
+
+        <!-- Start floating btn -->
+        <div class="fixed-action-btn">
+                <a class="btn-floating btn-large red modal-triggeruser" v-on:click="ShowModalUsers()" href="#modalManagementUser">
+                  <i class="large material-icons">people</i>
+                </a>
+        </div>
+        <!-- End floating btn -->
+
+
+        <!-- Start Section Modal Assign user to task -->
+        <div id="modalAssignTaskUser" class="modal">
+            <div class="modal-content">
+                <h4>Task : {{modal.task.name}}</h4>
+                <h5>Assigned user : {{username}}</h5>
+                </br>
+            
+                <div class="row">
+                    <div class="col s12">  
+                        <label for="username">Name Task</label>                      
+                        <input type="text" class="validate" id="username" placeholder="username" 
+                        v-model="modal.task.name"/>
+                    </div> 
+                    <div class="col s12">  
+                        <label for="description">Description Task</label>                      
+                        <textarea name="description" class="materialize-textarea black-text" 
+                                rows="10" cols="50" placeholder="Description State" v-model="modal.task.description">
+                        </textarea>
+                    </div>
+                    <div class="input-field col s13">   
+                            Select a user
+                            <div id="autocompleteUser" class="autocomplete">
+                                <input class="autocomplete-input" name="autocompleteUser" placeholder="select a user"
+                                aria-label="select a user">
+                                <ul class="autocomplete-result-list"></ul>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a class="modal-action modal-close waves-effect waves-green btn-flat" v-on:click="resetModal()">Cancel</a>
+                <a class="modal-action modal-close waves-effect waves-green btn-flat" v-on:click="AssignUser()">Apply</a>
+            </div>
+        </div>
+        <!-- End Section Modal Assign user to task -->
+
+        <!-- Start Section Modal management user -->
+        <div id="modalManagementUser" class="modal">
+                <div class="modal-content">
+                    <h4>Management User</h4>
+                    </br>
+                
+                    <div class="row">
+                        <div class="col s12 m6 l6">  
+                             <ul>
+                                <li v-for="user in listUser">                                          
+                                    <div class="taskButton">                                                  
+                                        <a class="waves-effect waves-light btn  blue aTask"  href="#modal1">{{user.username}}</a>
+                                        <a href="#"><i class="material-icons" id="iconDelete" v-on:click="RemoveUser(user._id)">delete_forever</i></a>                                           
+                                    </div> 
+                                </li>
+                            </ul>                                            
+                        </div> 
+                        <div class="col s12 m6 l6">  
+                                <div class="card white darken-1">
+                                        <div class="card-content white-text">
+                                            <span class="card-title black-text"><strong>Add New User</strong></span>                                
+                                            <input type="text" class="validate black-text" placeholder="Username" v-model="username">                                   
+                                        </div>
+                                        <div class="card-action">
+                                            <button class="waves-effect waves-light btn blue" v-on:click="AddUser()">Add User</button>  
+                                        </div>
+                                    </div> 
+                        </div>                         
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="modal-action modal-close waves-effect waves-green btn-flat" >Close</a>
+                </div>
+            </div>
+            <!-- End Section body Board -->
+
+    </div>
+    
+
+    
+    <script src="js/jquery.min.js" type="text/javascript"></script>         
+    <script src="js/materialize.min.js"></script>
+    <script src="js/vue.js" type="text/javascript"></script>
+    <script src="https://unpkg.com/@trevoreyre/autocomplete-js"></script>
+    <script src="js/axios.min.js" type="text/javascript"></script>
+    <script src="js/sweetalert.min.js"></script>   
+    <script src="js/index.js"></script>  
+    
+
+</body>
+</html>
+
+
+
+

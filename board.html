@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDoListWeb - Board</title>
+    <link rel="icon" href="img/logo.jpg" type="image/x-icon">	
+    <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">  
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div id="appBoard">
+        <!-- Start Section Header-->
+        <section id="Header">
+            <nav class="blue">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo">To Do List</a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">                    
+                        <li>{{ username }}<a href="index.html" class="waves-effect waves-light"><i class="material-icons">exit_to_app</i></a></li>
+                    </ul>
+                </div>
+            </nav>
+        </section>
+        <!-- End Section Header-->
+
+
+        <!-- Start Section body Board -->
+        <section id="Content-Section2" >
+            <div class="row">
+                <div class="col s3 m3 l3">
+                    <div clas="row">
+                        <!-- Start Div Add new state -->
+                        <div class="card white darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title black-text"><strong>Add new State</strong></span>                                
+                                <input type="text" class="validate black-text" placeholder="New State" v-model="newState">                                   
+                                <textarea name="textarea" class="materialize-textarea black-text" rows="10" cols="50" placeholder="Description State" v-model="descNewState"></textarea>
+                            </div>
+                            <div class="card-action">
+                                <button class="waves-effect waves-light btn blue" v-on:click="AddState()">Add State</button>  
+                            </div>
+                        </div> 
+                        <!-- End Div Add new state -->  
+
+                        <!-- Start Div Add new task -->
+                        <div class="card white darken-1">
+                            <div class="card-content white-text">
+                                <span class="card-title black-text"><strong>Add New Task</strong></span>                                
+                                <input type="text" class="validate black-text" placeholder="Name Task" v-model="newTask">                                   
+                                <textarea name="textarea" class="materialize-textarea black-text" rows="10" cols="50" placeholder="Description Task" v-model="descNewTask"></textarea>
+                            </div>
+                            <div class="card-action">
+                                <button class="waves-effect waves-light btn blue" v-on:click="AddTask()">Add Task</button>  
+                            </div>
+                        </div> 
+                        <!-- End Div Add new task -->
+
+                        <!-- Start Div List of tasks -->
+                        <div class="card white darken-1">
+                                <div class="card-content black-text" style="overflow: auto; height: 400px;">
+                                    <ul>
+                                        <li v-for="task in listTask">                                          
+                                            <div class="dropdown taskButton">
+                                                <button class="dropbtn  blue">{{task.name}}
+                                                        <i class="material-icons right">arrow_drop_up</i>
+                                                </button>
+                                                
+                                                <div class="dropdown-content-down">                                                    
+                                                    <a v-for="state in listState" v-on:click="AssignState(task,state._id)">{{state.name}}</a>  
+                                                </div>                                              
+                                            </div>    
+                                            <a href="#"><i class="material-icons" id="iconDelete" v-on:click="RemoveTask(task._id)">delete_forever</i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                        </div> 
+                        <!-- Start Div List of tasks -->                         
+                    </div>
+                </div>
+
+                <!-- Start  List States in Columns -->
+                <div class="col s9 m9 l9">                    
+                    <div class="row">
+                        <!-- We show the states created by the user-->
+                        <div class="col s10 m2 l2"  v-for="state in listState">
+                            <div class="dropdown">
+                                <h5>{{state.name}}</h5>
+                                    <a href="#" >
+                                        <i class="material-icons dropdown-content-down" 
+                                        id="iconDelete" 
+                                        v-on:click="RemoveState(state._id)">
+                                        delete_forever
+                                        </i>
+                                    </a>                                     
+                            </div>  
+
+                             <!-- We show the tasks in their respective state -->       
+                            <div class="card-panel white">
+                                <div v-for="task in  listShowTask" v-if="task.stateid == state._id">
+                                    <div class="dropdown taskButton">
+                                        <a class="waves-effect waves-light btn taskButton">{{task.name}}
+                                                <i class="material-icons right">arrow_drop_up</i>
+                                        </a>  
+                                        <div class="dropdown-content-down">                                                    
+                                                <a v-for="stat in listState" v-on:click="ChangeState(task,stat._id)">{{stat.name}}</a>                                                  
+                                        </div>                                     
+                                    </div> 
+                                    <a href="#" ><i class="material-icons " id="iconDelete" v-on:click="RemoveTask(task._id)">delete_forever</i></a> 
+                                </div>                                 
+                            </div>
+                        </div>                            
+                    </div>
+            </div>
+        </section>
+        <!-- Start Section body Board -->
+
+    </div>
+    
+
+    <script src="js/vue.js" type="text/javascript"></script>
+    <script src="js/axios.min.js" type="text/javascript"></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script>         
+    <script src="js/materialize.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>   
+    <script src="js/board.js"></script>   
+
+</body>
+</html>
+
+
+
+

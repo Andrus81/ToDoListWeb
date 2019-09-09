@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDoListWeb</title>
+    <link rel="icon" href="img/logo.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    
+</head>
+<body class=" blue lighten-5">
+    <div id="appPerson">
+        <!-- Start Section Header-->
+        <section id="Header">
+            <nav class="blue">
+                <div class="nav-wrapper">
+                    <a href="#" class="brand-logo center">To Do List</a>
+                </div>
+            </nav>
+        </section>
+        <!-- End Section Header-->
+
+        <!-- Start Section Login-->
+        <section id="Content-Section" class="valign-wrapper row">
+            <div class="col card hoverable s10 pull-s1 m6 pull-m3 l4 pull-l4">            
+                <div class="card-content">
+                    <span class="card-title center-align"><strong>Your Own Board In Minutes</strong></span>
+                    <div class="row">
+                        <div class="input-field col s12">                        
+                            <input type="text" class="validate" id="username" placeholder="Username" v-model="user"/>
+                        </div> 
+                        <div class="input-field col s12">
+                            <label><strong>Just enter a username and it's yours</strong></label>      
+                        </div>      
+                    </div>
+                </div>
+                <div class="card-action center-align">                        
+                    <button class="btn btn-large blue waves-effect waves-light" v-on:click="login()" >Log IN</button>
+                </div>   
+                <a href="index.html"><strong>Go to home</strong></a>
+            </div>            
+        </section>
+        <!-- End Section Login-->
+
+         <!-- Start Section Footer-->
+        <section id="Footer">
+            <footer class="page-footer blue">            
+                <div class="footer-copyright">
+                    <div class="container">
+                    © 2019 CordobaLM
+                    <a class="grey-text text-lighten-4 right" href="#!">ToDoList-CondorLabs</a>
+                    </div>
+                </div>
+            </footer>
+        </section>
+        <!-- End Section Footer-->
+    </div>
+    
+
+    <script src="js/materialize.min.js"></script>   
+    <script src="js/vue.js" type="text/javascript"></script>
+    <script src="js/axios.min.js" type="text/javascript"></script>
+    <script src="js/jquery.min.js" type="text/javascript"></script> 
+    <script src="js/sweetalert.min.js"></script>        
+    <script src="js/person.js" type="text/javascript"></script>
+</body>
+</html>

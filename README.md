@@ -12,6 +12,13 @@ which is at the beginning of the file, specifying the path of your server "ToDoL
 var Api ="Server Path";
 ```
 
+## Navigation
+when entering the web, they will find a board, where they can create all the tasks they want, those tasks, when they hover over them, they can choose a state, and if they click on the task, they can assign it to a user,
+
+At the bottom you will find a floating button, where you can create, and delete users.
+
+In the header, you can see the option to go to a private board, in it, each user can have their own space
+
 
 
 ## Built with 🛠️
